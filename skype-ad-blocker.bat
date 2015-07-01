@@ -37,10 +37,10 @@ GOTO :confirm
 PAUSE
 
 :writeHost
-:: Writing the changes to the host file so add domains are blocked.
+:: Writing the changes to the host file so ad domains are blocked.
 ECHO.
 ECHO.
-ECHO Writing add domains to host file . . .
+ECHO Writing ad domains to host file . . .
 ECHO.
 >nul FIND "# Skype Ads Blocker" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '# Skype Ads Blocker' already in hosts file, skipping . . .) || (ECHO # Skype Ads Blocker >> "C:\Windows\System32\drivers\etc\hosts")
 >nul FIND "127.0.0.1 live.rads.msn.com" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '127.0.0.1 live.rads.msn.com' already in hosts file, skipping . . .) || (ECHO 127.0.0.1 live.rads.msn.com >> "C:\Windows\System32\drivers\etc\hosts")
