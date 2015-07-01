@@ -27,7 +27,7 @@ ECHO.
 ECHO Confirming . . .
 ECHO.
 ECHO This script modifies your hosts file. It does not mess with Skype itself.
-ECHO Therefore we don't breach Skype's terms and conditions or user agreement
+ECHO Therefore we don't breach Skype's terms and conditions or user agreement.
 ECHO.
 SET /P c=Are you sure you want to continue [Y/N]?
 IF /I "%c%" EQU "Y" GOTO :writeHost
