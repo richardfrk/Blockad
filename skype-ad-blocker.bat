@@ -59,7 +59,7 @@ GOTO rebootSkype
 ECHO.
 ECHO.
 ECHO Shutting down Skype . . .
-"C:\Program Files (x86)\Skype\Phone\Skype.exe" /shutdown
+TASKKILL /F /IM skype.exe
 ECHO.
 ECHO.
 ECHO Starting Skype . . .
