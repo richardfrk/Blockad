@@ -52,14 +52,14 @@ ECHO.
 >nul FIND "127.0.0.1 b.ads2.msads.net" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '127.0.0.1 b.ads2.msads.net' already in hosts file, skipping . . .) || (ECHO 127.0.0.1 b.ads2.msads.net >> "C:\Windows\System32\drivers\etc\hosts")
 >nul FIND "127.0.0.1 ac3.msn.com" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '127.0.0.1 ac3.msn.com' already in hosts file, skipping . . .) || (ECHO 127.0.0.1 ac3.msn.com >> "C:\Windows\System32\drivers\etc\hosts")
 >nul FIND "# End Skype Ads Blocker" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '# End Skype Ads Blocker' already in hosts file, skipping . . .) || (ECHO # End Skype Ads Blocker >> "C:\Windows\System32\drivers\etc\hosts")
+ECHO.
 GOTO rebootSkype
 
 :rebootSkype
-:: Restarting skype for the changes to take effect.
-ECHO.
+:: Restarting Skype for the changes to take effect.
 ECHO.
 ECHO Shutting down Skype . . .
-TASKKILL /F /IM skype.exe
+TASKKILL /F /IM Skype.exe >nul 2>&1
 ECHO.
 ECHO.
 ECHO Starting Skype . . .
