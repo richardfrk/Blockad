@@ -60,6 +60,7 @@ IF /I "%option%" EQU "1" GOTO :writeHost
 IF /I "%option%" EQU "2" GOTO :redirectingAds
 IF /I "%option%" EQU "3" GOTO :rebootSkype
 IF /I "%option%" EQU "4" EXIT
+GOTO :menu
 
 :redirectingAds
 :: Asking the user what domain the ad's should be redirected to.
