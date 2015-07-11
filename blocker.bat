@@ -72,7 +72,7 @@ EXIT /B
 
 CLS
 
-ECHO Usage.
+ECHO License.
 ECHO.
 ECHO This script modifies your hosts file. It does not mess with Skype itself.
 ECHO Therefore we don't breach Skype's terms and conditions or user agreement.
@@ -88,10 +88,7 @@ GOTO :confirm
 
 CLS
 
-ECHO Redirecting ad's.
-ECHO.
 ECHO Do you want to redirect ad's to a specific adress on your local machine?
-ECHO If you don't know what this means, press enter for localhost.
 ECHO.
 SET /P ip=Domain: 
 GOTO :config
@@ -102,8 +99,6 @@ GOTO :config
 
 CLS
 
-ECHO Installation directory.
-ECHO.
 ECHO Where is your Skype installed? For the default directory press enter.
 ECHO.
 GOTO :config
@@ -131,7 +126,6 @@ IF /I "%installDir%" EQU "" SET installDir=C:\Program Files (x86)\Skype\
 
 CLS
 
-ECHO.
 ECHO Shutting down Skype...
 TASKKILL /F /IM Skype.exe >nul 2>&1
 ECHO.
