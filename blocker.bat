@@ -7,6 +7,43 @@
 
 @ECHO off
 
+:menu
+:: A place where the user can specify what he wants to do.
+
+CLS
+
+ECHO Main Menu.
+ECHO.
+ECHO 1. Block Skype ad's.
+ECHO 2. Configuration.
+ECHO 3. Reboot Skype.
+ECHO 4. Exit.
+ECHO.
+SET /P option=Option: 
+IF /I "%option%" EQU "1" GOTO :checkPrivileges
+IF /I "%option%" EQU "2" GOTO :config
+IF /I "%option%" EQU "3" GOTO :rebootSkype
+IF /I "%option%" EQU "4" EXIT
+GOTO :menu
+
+
+:config
+:: The configuration menu
+CLS
+
+ECHO Configuration Menu.
+ECHO.
+ECHO 1. Specify the installation directory.
+ECHO 2. Add redirecting.
+ECHO 3. Exit.
+ECHO.
+SET /P option=Option: 
+IF /I "%option%" EQU "1" GOTO :installationDirectory
+IF /I "%option%" EQU "2" GOTO :redirectingAds
+IF /I "%option%" EQU "3" GOTO :menu
+GOTO :menu
+
+
 :checkPrivileges
 :: Checking if the user has administrator rights.
 
@@ -39,28 +76,9 @@ ECHO This script modifies your hosts file. It does not mess with Skype itself.
 ECHO Therefore we don't breach Skype's terms and conditions or user agreement.
 ECHO.
 SET /P confirm=Are you sure you want to continue [Y/N]?
-IF /I "%confirm%" EQU "Y" GOTO :menu
-IF /I "%confirm%" EQU "N" EXIT
+IF /I "%confirm%" EQU "Y" GOTO :writeHost
+IF /I "%confirm%" EQU "N" GOTO :menu
 GOTO :confirm
-
-:menu
-:: A place where the user can specify what he wants to do.
-
-CLS
-
-ECHO Menu.
-ECHO.
-ECHO 1. Block Skype ad's.
-ECHO 2. Configuration.
-ECHO 3. Reboot Skype.
-ECHO 4. Exit.
-ECHO.
-SET /P option=Option: 
-IF /I "%option%" EQU "1" GOTO :writeHost
-IF /I "%option%" EQU "2" GOTO :redirectingAds
-IF /I "%option%" EQU "3" GOTO :rebootSkype
-IF /I "%option%" EQU "4" EXIT
-GOTO :menu
 
 :redirectingAds
 :: Asking the user what domain the ad's should be redirected to.
@@ -73,7 +91,7 @@ ECHO Do you want to redirect ad's to a specific adress on your local machine?
 ECHO If you don't know what this means, press enter for localhost.
 ECHO.
 SET /P ip=Domain: 
-GOTO :installationDirectory
+GOTO :config
 
 :installationDirectory
 :: If the user installed Skype in a different directory he can change it here.
@@ -85,7 +103,7 @@ ECHO.
 ECHO Where is your Skype installed? For the default directory press enter.
 ECHO.
 SET /P installDir=Path: 
-GOTO :menu
+GOTO :config
 
 :writeHost
 :: Writing the changes to the host file so ad domains are blocked.
@@ -142,5 +160,5 @@ CLS
 
 ECHO Successfully blocked domains, your Skype should be ad free now !
 ECHO.
-SET /P =Press any key to return to the menu...
+SET /P =Press enter to return to the menu...
 GOTO :menu
