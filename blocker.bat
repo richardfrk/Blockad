@@ -76,12 +76,12 @@ EXIT /B
 
 CLS
 
-ECHO License.
+ECHO Warning.
 ECHO.
 ECHO This script modifies your hosts file. It does not mess with Skype itself.
 ECHO Therefore we don't breach Skype's terms and conditions or user agreement.
 ECHO.
-SET /P confirm=Are you sure you want to continue [Y/N]?
+SET /P confirm=Are you sure you want to continue [Y/N]? 
 IF /I "%confirm%" EQU "Y" GOTO :writeHost
 IF /I "%confirm%" EQU "N" GOTO :menu
 GOTO :confirm
