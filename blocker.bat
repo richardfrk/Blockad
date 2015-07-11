@@ -7,6 +7,8 @@
 
 @ECHO off
 
+SET runDirectory=%CD%
+
 :menu
 :: A place where the user can specify what he wants to do.
 
@@ -68,6 +70,8 @@ EXIT /B
 :confirm
 :: Asking the user if he really wanted to do this.
 
+CD %runDirectory%
+
 CLS
 
 ECHO Usage.
@@ -114,26 +118,7 @@ CLS
 
 ECHO Writing ad domains to host file...
 ECHO.
->nul FIND "# Skype Ads Blocker" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '# Skype Ads Blocker' already in hosts file, skipping . . .) || (ECHO # Skype Ads Blocker >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% secure.flashtalking.com" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% secure.flashtalking.com' already in hosts file, skipping . . .) || (ECHO %ip% secure.flashtalking.com >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% cdn.atdmt.com" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% cdn.atdmt.com' already in hosts file, skipping . . .) || (ECHO %ip% cdn.atdmt.com >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% ad-emea.doubleclick.net" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% ad-emea.doubleclick.net' already in hosts file, skipping . . .) || (ECHO %ip% ad-emea.doubleclick.net >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% ad.doubleclick.net" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% ad.doubleclick.net' already in hosts file, skipping . . .) || (ECHO %ip% ad.doubleclick.net >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% ec.atdmt.com" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% ec.atdmt.com' already in hosts file, skipping . . .) || (ECHO %ip% ec.atdmt.com >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% msntest.serving-sys.com" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% msntest.serving-sys.com' already in hosts file, skipping . . .) || (ECHO %ip% msntest.serving-sys.com >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% sO.2mdn.net" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% sO.2mdn.net' already in hosts file, skipping . . .) || (ECHO %ip% sO.2mdn.net >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% aka-cdn-ns.adtech.de" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% aka-cdn-ns.adtech.de' already in hosts file, skipping . . .) || (ECHO %ip% aka-cdn-ns.adtech.de >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% rads.msn.com" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% rads.msn.com' already in hosts file, skipping . . .) || (ECHO %ip% rads.msn.com >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% live.rads.msn.com" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% live.rads.msn.com' already in hosts file, skipping . . .) || (ECHO %ip% live.rads.msn.com >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% ads1.msn.com" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% ads1.msn.com' already in hosts file, skipping . . .) || (ECHO %ip% ads1.msn.com >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% rad.msn.com" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% rad.msn.com' already in hosts file, skipping . . .) || (ECHO %ip% rad.msn.com >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% static.2mdn.net" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% static.2mdn.net' already in hosts file, skipping . . .) || (ECHO %ip% static.2mdn.net >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% g.msn.com" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% g.msn.com' already in hosts file, skipping . . .) || (ECHO %ip% g.msn.com >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% ads2.msads.net" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% ads2.msads.net' already in hosts file, skipping . . .) || (ECHO %ip% ads2.msads.net >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% a.ads2.msads.net" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% a.ads2.msads.net' already in hosts file, skipping . . .) || (ECHO %ip% a.ads2.msads.net >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% b.ads2.msads.net" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% b.ads2.msads.net' already in hosts file, skipping . . .) || (ECHO %ip% b.ads2.msads.net >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "%ip% ac3.msn.com" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% ac3.msn.com' already in hosts file, skipping . . .) || (ECHO %ip% ac3.msn.com >> "C:\Windows\System32\drivers\etc\hosts")
->nul FIND "# End Skype Ads Blocker" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '# End Skype Ads Blocker' already in hosts file, skipping . . .) || (ECHO # End Skype Ads Blocker >> "C:\Windows\System32\drivers\etc\hosts")
+FOR /F "tokens=* delims=" %%x IN (domains.txt) DO >nul FIND "%ip% %%x" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% %%x' already in hosts file, skipping . . .) || (ECHO %ip% %%x >> "C:\Windows\System32\drivers\etc\hosts")
 
 GOTO rebootSkype
 
