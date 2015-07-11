@@ -8,7 +8,7 @@
 @ECHO off
 
 :menu
-:: A place where the user can specify what he wants to do.
+:: A place where the user can specify which action he wants to take.
 
 CLS
 
@@ -28,7 +28,8 @@ GOTO :menu
 
 
 :config
-:: The configuration menu
+:: The configuration menu.
+
 CLS
 
 ECHO Configuration Menu.
@@ -45,7 +46,7 @@ GOTO :menu
 
 
 :checkPrivileges
-:: Checking if the user has administrator rights.
+:: Checking if the user has administrator rights or not.
 
 CLS
 
@@ -57,6 +58,9 @@ IF '%errorlevel%' == '0' (GOTO confirm) ELSE (GOTO getPrivileges)
 
 :getPrivileges
 :: If the user doesn't have administrator rights, then prompt for it.
+
+CLS
+
 IF '%1'=='ELEV' (SHIFT & GOTO confirm & ECHO Access granted.)
 SETLOCAL DisableDelayedExpansion
 SET "batchPath=%~0"
@@ -99,8 +103,37 @@ GOTO :config
 
 CLS
 
-ECHO Where is your Skype installed? For the default directory press enter.
-ECHO.
+SETLOCAL enabledelayedexpansion
+
+SET chooser=%temp%\fchooser.exe
+IF exist !chooser! DEL !chooser!
+
+>"%temp%\c.cs" ECHO using System;using System.Windows.Forms;
+>>"%temp%\c.cs" ECHO class dummy{[STAThread]
+>>"%temp%\c.cs" ECHO public static void Main^(^){
+>>"%temp%\c.cs" ECHO FolderBrowserDialog f=new FolderBrowserDialog^(^);
+>>"%temp%\c.cs" ECHO f.SelectedPath=System.Environment.CurrentDirectory;
+>>"%temp%\c.cs" ECHO f.Description="Please select the folder Skype is installed in.";
+>>"%temp%\c.cs" ECHO f.ShowNewFolderButton=true;
+>>"%temp%\c.cs" ECHO if^(f.ShowDialog^(^)==DialogResult.OK^){Console.Write^(f.SelectedPath^);}}}
+    
+FOR /F "delims=" %%i IN ('DIR /B /S "%windir%\microsoft.net\*csc.exe"') DO (
+   IF NOT EXIST "!chooser!" "%%i" /nologo /out:"!chooser!" "%temp%\c.cs" 2>NUL
+)
+
+DEL "%temp%\c.cs"
+
+IF NOT EXIST "!chooser!" (
+   ECHO Please install .NET 2.0 or newer!
+   ECHO.
+   SET /P =Press enter to return to the menu...
+   START http://www.microsoft.com/net
+)
+
+FOR /F "delims=" %%i IN ('%chooser%') DO SET "installDir=%%i"
+
+DEL "%temp%\fchooser.exe" 2>NUL
+
 GOTO :config
 
 
@@ -114,7 +147,7 @@ CLS
 ECHO Writing ad domains to host file...
 ECHO.
 PUSHD "%~dp0"
-FOR /F "tokens=* delims=" %%x IN (domains.txt) DO >nul FIND "%ip% %%x" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% %%x' already in hosts file, skipping . . .) || (ECHO %ip% %%x >> "C:\Windows\System32\drivers\etc\hosts")
+FOR /F "tokens=* delims=" %%x IN (domains.txt) DO >NUL FIND "%ip% %%x" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% %%x' already in hosts file, skipping . . .) || (ECHO %ip% %%x >> "C:\Windows\System32\drivers\etc\hosts")
 
 GOTO rebootSkype
 
@@ -127,7 +160,7 @@ IF /I "%installDir%" EQU "" SET installDir=C:\Program Files (x86)\Skype\
 CLS
 
 ECHO Shutting down Skype...
-TASKKILL /F /IM Skype.exe >nul 2>&1
+TASKKILL /F /IM Skype.exe >NUL 2>&1
 ECHO.
 ECHO Starting Skype...
 START "" "%installDir%\Phone\Skype.exe"
