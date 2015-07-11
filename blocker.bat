@@ -52,12 +52,14 @@ ECHO Menu
 ECHO.
 ECHO 1. Block Skype ad's.
 ECHO 2. Configuration.
-ECHO 3. Exit.
+ECHO 3. Reboot Skype.
+ECHO 4. Exit.
 ECHO.
 SET /P option=Option: 
 IF /I "%option%" EQU "1" GOTO :writeHost
 IF /I "%option%" EQU "2" GOTO :redirectingAds
-IF /I "%option%" EQU "3" EXIT
+IF /I "%option%" EQU "3" GOTO :rebootSkype
+IF /I "%option%" EQU "4" EXIT
 
 :redirectingAds
 :: Asking the user what domain the ad's should be redirected to.
@@ -87,10 +89,9 @@ GOTO :menu
 :writeHost
 :: Writing the changes to the host file so ad domains are blocked.
 
-CLS
-
-IF /I "%installDir%" EQU "" SET installDir=C:\Program Files (x86)\Skype\
 IF /I "%ip%" EQU "" SET ip=127.0.0.1
+
+CLS
 
 ECHO Writing ad domains to host file . . .
 ECHO.
@@ -119,6 +120,8 @@ GOTO rebootSkype
 
 :rebootSkype
 :: Restarting Skype for the changes to take effect.
+
+IF /I "%installDir%" EQU "" SET installDir=C:\Program Files (x86)\Skype\
 
 CLS
 
