@@ -151,14 +151,4 @@ ECHO.
 ECHO Starting Skype...
 START "" "%installDir%\Phone\Skype.exe"
 
-GOTO finish
-
-:finish
-:: Tells the user the ad block was successful.
-
-CLS
-
-ECHO Successfully blocked domains, your Skype should be ad free now !
-ECHO.
-SET /P =Press enter to return to the menu...
 GOTO :menu
