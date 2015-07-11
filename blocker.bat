@@ -7,8 +7,6 @@
 
 @ECHO off
 
-SET runDirectory=%CD%
-
 :menu
 :: A place where the user can specify what he wants to do.
 
@@ -56,9 +54,10 @@ ECHO.
 NET FILE 1>NUL 2>NUL
 IF '%errorlevel%' == '0' (GOTO confirm) ELSE (GOTO getPrivileges)
 
+
 :getPrivileges
 :: If the user doesn't have administrator rights, then prompt for it.
-IF '%1'=='ELEV' (SHIFT & GOTO confirm & ECHO Access granted.)
+IF '%1'=='ELEV' (SHIFT & GOTO confirm & SET runDirectory=%CD% & ECHO Access granted.)
 SETLOCAL DisableDelayedExpansion
 SET "batchPath=%~0"
 SETLOCAL EnableDelayedExpansion
@@ -67,10 +66,9 @@ ECHO UAC.ShellExecute "!batchPath!", "ELEV", "", "runas", 1 >> "%temp%\OEgetPriv
 "%temp%\OEgetPrivileges.vbs"
 EXIT /B
 
+
 :confirm
 :: Asking the user if he really wanted to do this.
-
-CD %runDirectory%
 
 CLS
 
@@ -83,6 +81,7 @@ SET /P confirm=Are you sure you want to continue [Y/N]?
 IF /I "%confirm%" EQU "Y" GOTO :writeHost
 IF /I "%confirm%" EQU "N" GOTO :menu
 GOTO :confirm
+
 
 :redirectingAds
 :: Asking the user what domain the ad's should be redirected to.
@@ -97,6 +96,7 @@ ECHO.
 SET /P ip=Domain: 
 GOTO :config
 
+
 :installationDirectory
 :: If the user installed Skype in a different directory he can change it here.
 
@@ -106,8 +106,8 @@ ECHO Installation directory.
 ECHO.
 ECHO Where is your Skype installed? For the default directory press enter.
 ECHO.
-SET /P installDir=Path: 
 GOTO :config
+
 
 :writeHost
 :: Writing the changes to the host file so ad domains are blocked.
@@ -118,9 +118,11 @@ CLS
 
 ECHO Writing ad domains to host file...
 ECHO.
-FOR /F "tokens=* delims=" %%x IN (domains.txt) DO >nul FIND "%ip% %%x" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% %%x' already in hosts file, skipping . . .) || (ECHO %ip% %%x >> "C:\Windows\System32\drivers\etc\hosts")
+PUSHD "%~dp0"
+FOR /F "tokens=* delims=" %%x IN (%runDirectory% domains.txt) DO >nul FIND "%ip% %%x" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% %%x' already in hosts file, skipping . . .) || (ECHO %ip% %%x >> "C:\Windows\System32\drivers\etc\hosts")
 
 GOTO rebootSkype
+
 
 :rebootSkype
 :: Restarting Skype for the changes to take effect.
