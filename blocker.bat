@@ -12,7 +12,7 @@
 
 CLS
 
-ECHO Main Menu.
+ECHO Menu.
 ECHO.
 ECHO 1. Block Skype ad's.
 ECHO 2. Configuration.
@@ -32,7 +32,7 @@ GOTO :menu
 
 CLS
 
-ECHO Configuration Menu.
+ECHO Configuration.
 ECHO.
 ECHO 1. Specify the installation directory.
 ECHO 2. Add redirecting.
