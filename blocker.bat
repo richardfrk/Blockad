@@ -57,7 +57,7 @@ IF '%errorlevel%' == '0' (GOTO confirm) ELSE (GOTO getPrivileges)
 
 :getPrivileges
 :: If the user doesn't have administrator rights, then prompt for it.
-IF '%1'=='ELEV' (SHIFT & GOTO confirm & SET runDirectory=%CD% & ECHO Access granted.)
+IF '%1'=='ELEV' (SHIFT & GOTO confirm & ECHO Access granted.)
 SETLOCAL DisableDelayedExpansion
 SET "batchPath=%~0"
 SETLOCAL EnableDelayedExpansion
@@ -114,7 +114,7 @@ CLS
 ECHO Writing ad domains to host file...
 ECHO.
 PUSHD "%~dp0"
-FOR /F "tokens=* delims=" %%x IN (%runDirectory% domains.txt) DO >nul FIND "%ip% %%x" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% %%x' already in hosts file, skipping . . .) || (ECHO %ip% %%x >> "C:\Windows\System32\drivers\etc\hosts")
+FOR /F "tokens=* delims=" %%x IN (domains.txt) DO >nul FIND "%ip% %%x" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% %%x' already in hosts file, skipping . . .) || (ECHO %ip% %%x >> "C:\Windows\System32\drivers\etc\hosts")
 
 GOTO rebootSkype
 
