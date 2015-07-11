@@ -1,5 +1,5 @@
 ::
-:: Skype Ad Blocker
+:: Skype Ad Blocker 0.1.0.0
 ::
 :: 
 :: © 2015 Dalthow Game Studios
@@ -12,7 +12,7 @@
 
 CLS
 
-ECHO Checking privileges . . .
+ECHO Checking privileges...
 ECHO.
 NET FILE 1>NUL 2>NUL
 IF '%errorlevel%' == '0' (GOTO confirm) ELSE (GOTO getPrivileges)
@@ -33,7 +33,7 @@ EXIT /B
 
 CLS
 
-ECHO Confirming . . .
+ECHO Usage.
 ECHO.
 ECHO This script modifies your hosts file. It does not mess with Skype itself.
 ECHO Therefore we don't breach Skype's terms and conditions or user agreement.
@@ -48,7 +48,7 @@ GOTO :confirm
 
 CLS
 
-ECHO Menu
+ECHO Menu.
 ECHO.
 ECHO 1. Block Skype ad's.
 ECHO 2. Configuration.
@@ -66,7 +66,7 @@ IF /I "%option%" EQU "4" EXIT
 
 CLS
 
-ECHO Redirecting ad's
+ECHO Redirecting ad's.
 ECHO.
 ECHO Do you want to redirect ad's to a specific adress on your local machine?
 ECHO If you don't know what this means, press enter for localhost.
@@ -79,7 +79,7 @@ GOTO :installationDirectory
 
 CLS
 
-ECHO Installation directory
+ECHO Installation directory.
 ECHO.
 ECHO Where is your Skype installed? For the default directory press enter.
 ECHO.
@@ -93,7 +93,7 @@ IF /I "%ip%" EQU "" SET ip=127.0.0.1
 
 CLS
 
-ECHO Writing ad domains to host file . . .
+ECHO Writing ad domains to host file...
 ECHO.
 >nul FIND "# Skype Ads Blocker" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '# Skype Ads Blocker' already in hosts file, skipping . . .) || (ECHO # Skype Ads Blocker >> "C:\Windows\System32\drivers\etc\hosts")
 >nul FIND "%ip% secure.flashtalking.com" "C:\Windows\System32\drivers\etc\hosts" && (ECHO '%ip% secure.flashtalking.com' already in hosts file, skipping . . .) || (ECHO %ip% secure.flashtalking.com >> "C:\Windows\System32\drivers\etc\hosts")
@@ -126,11 +126,10 @@ IF /I "%installDir%" EQU "" SET installDir=C:\Program Files (x86)\Skype\
 CLS
 
 ECHO.
-ECHO Shutting down Skype . . .
+ECHO Shutting down Skype...
 TASKKILL /F /IM Skype.exe >nul 2>&1
 ECHO.
-ECHO.
-ECHO Starting Skype . . .
+ECHO Starting Skype...
 START "" "%installDir%\Phone\Skype.exe"
 
 GOTO finish
@@ -142,5 +141,5 @@ CLS
 
 ECHO Successfully blocked domains, your Skype should be ad free now !
 ECHO.
-SET /P =Press any key to return to the menu . . . 
+SET /P =Press any key to return to the menu...
 GOTO :menu
