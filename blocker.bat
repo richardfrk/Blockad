@@ -159,10 +159,15 @@ IF /I "%installDir%" EQU "" SET installDir=C:\Program Files (x86)\Skype\
 
 CLS
 
-ECHO Shutting down Skype...
+ECHO Shutting down Skype, BitTorrent, Spotify...
 TASKKILL /F /IM Skype.exe >NUL 2>&1
+TASKKILL /F /IM BitTorrent.exe >NUL 2>&1
+TASKKILL /F /IM Spotify.exe >NUL 2>&1
 ECHO.
-ECHO Starting Skype...
+
+ECHO Starting Skype, BitTorrent, Spotify...
 START "" "%installDir%\Phone\Skype.exe"
+START "" "%APPDATA%\BitTorrent\BitTorrent.exe"
+START "" "%APPDATA%\Spotify\Spotify.exe"
 
 GOTO :menu
