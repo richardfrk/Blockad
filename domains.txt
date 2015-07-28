@@ -17,3 +17,7 @@ a.ads2.msads.net
 b.ads2.msads.net
 ac3.msn.com
 apps.skype.com
+cdn.bitmedianetwork.com
+static.ap.bittorrent.com
+pubads.g.doubleclick.net
+securepubads.g.doubleclick.net
